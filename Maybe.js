@@ -7,6 +7,9 @@ var Nothing = {
     },
     toString: function() {
         return 'Nothing';
+    },
+    isSomething: function(){
+      return false
     }
 };
 
@@ -15,6 +18,10 @@ function Just(value) {
 }
 
 Just.prototype.bind = Identity.prototype.bind;
+
+Just.prototype.isSomething = function(){
+  return true;
+}
 
 Just.prototype.toString = function() {
     return 'Just(' +  this.value + ')';
