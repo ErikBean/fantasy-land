@@ -12,21 +12,24 @@ var desiredColor //want to get cars[0].color
 
 
 function getCars(data){
-  return Maybe.of(data.cars)
+  console.log('>>> getCars ', arguments)
+  return data.cars ? data.cars : S.Nothing()
 }
 
 function getFirst(cars){
-  return Maybe.of(cars[0])
+  console.log('>>> getFirst ')
+  return cars.length ? cars[0] : S.Nothing()
 }
 
 function getColor(car) {
-  return Maybe.of(car.color)
+  console.log('>>> getColor ', car)
+  return car.color ? car.color : S.Nothing()
 }
 
 getData('http://www.cars.com')
   .then(function(data){
-    const maybe = Maybe.of(data)
-    const maybeColor = maybe.chain(getCars).chain(getFirst).chain(getColor)
+    const maybe = Maybe.of(S.Nothing())
+    const maybeColor = maybe.map(getCars).map(getFirst).map(getColor)
     console.log('color: ', maybeColor)
   })
   .catch((e) => {
