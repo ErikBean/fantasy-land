@@ -1,0 +1,8 @@
+{
+  "cars": [
+    {
+      "color": "red",
+      "wheels": 4
+    },
+  ]
+}

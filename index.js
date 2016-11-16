@@ -1,5 +1,7 @@
 var Identity = require('./Identity')
 var Maybe = require('./Maybe'), Nothing = Maybe.Nothing, Just = Maybe.Just
+var http = require('./http')
+
 
 var result = new Just(5).bind(function(value){
   return new Just(6).bind(function(value2){
@@ -23,3 +25,15 @@ function sum3(a){
 }
 console.log('\n\t* But without Maybe construct, execution does not stop on errors!')
 console.log('\nUnfantastic Result: ', sum3(5)()(7), '\n')
+
+
+var desiredColor //want to get cars[0].color
+
+http.get('foo')
+  .then(function(data){
+    console.log('data was', data)
+    desiredColor = data.cars[0].color //this is unsafe!     
+  }).catch((e) => {
+    console.error(e)
+  })
+
