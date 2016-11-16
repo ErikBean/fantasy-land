@@ -29,11 +29,23 @@ console.log('\nUnfantastic Result: ', sum3(5)()(7), '\n')
 
 var desiredColor //want to get cars[0].color
 
-http.get('foo')
+http.get('bad-foo')
+  .then(function(data){
+    if(!data){
+      return Promise.reject('no data')
+    } else{
+      return Promise.resolve(data)
+    }
+  })
   .then(function(data){
     console.log('data was', data)
     desiredColor = data.cars[0].color //this is unsafe!     
-  }).catch((e) => {
-    console.error(e)
+  }, function(e) {
+    console.log('rejection handler!', e)
+    //this rejection handler does not throw anything itself
+  })
+  .catch((e) => {
+    //so this code is never reached! 
+    console.error('.catch() Error handler: ', e)
   })
 
