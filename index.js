@@ -1,7 +1,6 @@
 var Identity = require('./Identity')
 var Maybe = require('./Maybe'), Nothing = Maybe.Nothing, Just = Maybe.Just
-var http = require('./http')
-
+var cars = require('./data')
 
 var result = new Just(5).bind(function(value){
   return new Just(6).bind(function(value2){
@@ -29,17 +28,28 @@ console.log('\nUnfantastic Result: ', sum3(5)()(7), '\n')
 
 var desiredColor //want to get cars[0].color
 
-function getColor(data){
-  return new Just(
-    getData: 
-  )
+function getColor(item){
+  return item.color
+}
+function first(items){
+  return items[0]
+}
+function getCars(data){
+  return data.cars
 }
 
-http.get('bad-foo')
-  .then(getColor)
-  .then(console.log)
+
+getData('bad-foo')
+  .then(function(data){
+    return 
+  })
   .catch((e) => {
     //so this code is never reached! 
     console.error('.catch() Error handler: ', e)
   })
 
+function getData( url ) {
+  return new Promise(function(resolve, reject){
+    setTimeout(() => resolve(cars), 500)
+  })
+}
