@@ -12,25 +12,22 @@ var desiredColor //want to get cars[0].color
 
 
 function getCars(data){
-  console.log('>>> getCars ', arguments)
   return data.cars ? data.cars : S.Nothing()
 }
 
 function getFirst(cars){
-  console.log('>>> getFirst ')
   return cars.length ? cars[0] : S.Nothing()
 }
 
 function getColor(car) {
-  console.log('>>> getColor ', car)
   return car.color ? car.color : S.Nothing()
 }
 
 getData('http://www.cars.com')
   .then(function(data){
-    const maybe = Maybe.of(S.Nothing())
+    const maybe = Maybe.of(data)
     const maybeColor = maybe.map(getCars).map(getFirst).map(getColor)
-    console.log('color: ', maybeColor)
+    console.log('color: ', maybeColor, ': ', S.maybeToNullable(maybeColor))
   })
   .catch((e) => {
     console.error('.catch() Error handler: ', e)
