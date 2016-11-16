@@ -1,47 +1,26 @@
-var Identity = require('./Identity')
-var Maybe = require('./Maybe'), Nothing = Maybe.Nothing, Just = Maybe.Just
+var Maybe = require('ramda-fantasy').Maybe
+// var Nothing = require('ramda-fantasy').Maybe
 var cars = require('./data')
 
-var result = new Just(5).bind(function(value){
-  return new Just(6).bind(function(value2){
-    return Nothing.bind(function(value3){
-      console.log('Create Maybe with sum of values: ', value , value2 , value3)
-      return new Just(value + value2 + value3)
-    })
-  })
-})
-
-
-console.log('Fantastic Result:', result.toString())
-
-function sum3(a){
-  return function(b){
-    return function(c){
-      console.log(`\t* Nested callback adding: ${a} + ${b} + ${c}`)
-      return a + b + c
-    }
-  }
+function getCars(data){
+  console.log('level 1', data)
+  return data.cars ? Maybe.of(data.cars) : Maybe.Nothing()
 }
-console.log('\n\t* But without Maybe construct, execution does not stop on errors!')
-console.log('\nUnfantastic Result: ', sum3(5)()(7), '\n')
 
-
-var desiredColor //want to get cars[0].color
+function first(items){
+  console.log('level 2')
+  return items.length ? Maybe.of(items[0]) : Maybe.Nothing()
+}
 
 function getColor(item){
-  return item.color
-}
-function first(items){
-  return items[0]
-}
-function getCars(data){
-  return data.cars
+  console.log('level 3')
+  return item.color ? Maybe.of(item.color) : Maybe.Nothing()
 }
 
-
-getData('bad-foo')
+getData('some-url')
   .then(function(data){
-    return 
+    var m =  Maybe.of(data).chain(getCars).chain(first).chain(getColor)
+    console.log(m.toString())
   })
   .catch((e) => {
     //so this code is never reached! 

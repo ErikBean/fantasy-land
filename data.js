@@ -1,3 +1,7 @@
 module.exports = {
-  "cars": null
+  "cars": [
+    {
+      "color":"red"
+    }
+  ]
 }
